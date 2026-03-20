@@ -37,13 +37,13 @@ app.get("/", (req, res) => {
 // --- API ROUTE ---
 app.get("/api/idea", async (req, res) => {
   try {
-    const response = await openai.createCompletion({
+    const response = await openai.completions.create({
       model: "text-davinci-003",
       prompt: "Generate one unique AI business idea",
       max_tokens: 60,
     });
 
-    const idea = response.data.choices[0].text.trim();
+    const idea = response.choices[0].text.trim();
     res.json({ idea });
   } catch (error) {
     console.error(error);
