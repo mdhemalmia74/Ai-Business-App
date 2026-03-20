@@ -2,14 +2,11 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Ai Business App is running 🚀");
+  res.send("Server is running 🚀");
 });
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log("Server running on port " + port);
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
-"scripts": {
-  "start": "node server.js"
-}
