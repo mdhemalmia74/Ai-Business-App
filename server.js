@@ -1,12 +1,12 @@
 // server.js
 const express = require("express");
+const { Configuration, OpenAIApi } = require("openai");
+
 const app = express();
 
 // --- OpenAI setup ---
-const { Configuration, OpenAIApi } = require("openai");
-
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Render এ Secret set করো
+  apiKey: process.env.OPENAI_API_KEY, // Render / .env এ set করো
 });
 const openai = new OpenAIApi(configuration);
 
@@ -40,7 +40,6 @@ app.get("/api/idea", async (req, res) => {
     });
 
     const idea = response.data.choices[0].text.trim();
-
     res.json({ idea });
   } catch (error) {
     console.error(error);
