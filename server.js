@@ -5,11 +5,15 @@ const { Configuration, OpenAIApi } = require("openai"); // OpenAI setup
 const app = express();
 
 // --- OpenAI configuration ---
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Set this in Render or .env
-});
-const openai = new OpenAIApi(configuration);
+// 기존 require
+// const { Configuration, OpenAIApi } = require("openai");
 
+// new v4+ compatible require
+const OpenAI = require("openai");
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 // --- FRONTEND ROUTE ---
 app.get("/", (req, res) => {
   res.send(`
