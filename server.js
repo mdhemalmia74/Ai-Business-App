@@ -1,12 +1,12 @@
 // server.js
 const express = require("express");
-const { Configuration, OpenAIApi } = require("openai");
+const { Configuration, OpenAIApi } = require("openai"); // OpenAI setup
 
 const app = express();
 
-// --- OpenAI setup ---
+// --- OpenAI configuration ---
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Render / .env এ set করো
+  apiKey: process.env.OPENAI_API_KEY, // Set this in Render / .env
 });
 const openai = new OpenAIApi(configuration);
 
