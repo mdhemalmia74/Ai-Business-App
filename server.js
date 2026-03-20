@@ -1,11 +1,23 @@
 const express = require("express");
 const app = express();
 
+// FRONTEND ROUTE
 app.get("/", (req, res) => {
-  res.send("Server is running 🚀");
+  res.send(`
+    <h1>AI Business App 🚀</h1>
+    <button onclick="getIdea()">Get Idea</button>
+
+    <script>
+      async function getIdea() {
+        const res = await fetch('/api/idea');
+        const data = await res.json();
+        alert(data.idea);
+      }
+    </script>
+  `);
 });
 
-const PORT = process.env.PORT || 3000;
+// API ROUTE (Step 1)
 app.get("/api/idea", (req, res) => {
   const ideas = [
     "Start a dropshipping business",
@@ -21,6 +33,9 @@ app.get("/api/idea", (req, res) => {
     idea: randomIdea
   });
 });
+
+// SERVER START
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
