@@ -1,15 +1,16 @@
-server.js
+// server.js
 const express = require("express");
 const { Configuration, OpenAIApi } = require("openai"); // OpenAI setup
 
 const app = express();
 
-OpenAI configuration
+// --- OpenAI configuration ---
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Set this in Render / .env
+  apiKey: process.env.OPENAI_API_KEY, // Set this in Render or .env
 });
 const openai = new OpenAIApi(configuration);
-FRONTEND ROUTE
+
+// --- FRONTEND ROUTE ---
 app.get("/", (req, res) => {
   res.send(`
     <h1>AI Business App 🚀</h1>
@@ -28,7 +29,8 @@ app.get("/", (req, res) => {
     </script>
   `);
 });
-API ROUTE
+
+// --- API ROUTE ---
 app.get("/api/idea", async (req, res) => {
   try {
     const response = await openai.createCompletion({
@@ -44,7 +46,8 @@ app.get("/api/idea", async (req, res) => {
     res.status(500).json({ idea: "Failed to generate idea" });
   }
 });
-SERVER START
+
+// --- SERVER START ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
