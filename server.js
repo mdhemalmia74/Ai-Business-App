@@ -1,20 +1,14 @@
-// server.js
 const express = require("express");
-const { Configuration, OpenAIApi } = require("openai"); // OpenAI setup
+const OpenAI = require("openai");
 
 const app = express();
 
-// --- OpenAI configuration ---
-// 기존 require
-// const { Configuration, OpenAIApi } = require("openai");
-
-// new v4+ compatible require
-const OpenAI = require("openai");
-
+// OpenAI setup
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-// --- FRONTEND ROUTE ---
+
+// FRONTEND
 app.get("/", (req, res) => {
   res.send(`
     <h1>AI Business App 🚀</h1>
@@ -34,16 +28,18 @@ app.get("/", (req, res) => {
   `);
 });
 
-// --- API ROUTE ---
+// API ROUTE (UPDATED ✅)
 app.get("/api/idea", async (req, res) => {
   try {
-    const response = await openai.completions.create({
-      model: "text-davinci-003",
-      prompt: "Generate one unique AI business idea",
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "user", content: "Generate one unique AI business idea" }
+      ],
       max_tokens: 60,
     });
 
-    const idea = response.choices[0].text.trim();
+    const idea = response.choices[0].message.content.trim();
     res.json({ idea });
   } catch (error) {
     console.error(error);
@@ -51,7 +47,7 @@ app.get("/api/idea", async (req, res) => {
   }
 });
 
-// --- SERVER START ---
+// SERVER
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
