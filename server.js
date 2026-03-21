@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 
-// FRONTEND
 app.get("/", (req, res) => {
   res.send(`
     <h1>AI Business App 🚀</h1>
@@ -21,8 +20,7 @@ app.get("/", (req, res) => {
   `);
 });
 
-// FREE API ROUTE
-app.get("/api/idea", async (req, res) => {
+app.get("/api/idea", (req, res) => {
   const ideas = [
     "AI-powered resume builder for job seekers",
     "Smart chatbot for small businesses",
@@ -30,7 +28,7 @@ app.get("/api/idea", async (req, res) => {
     "AI fitness coach app",
     "AI product description generator for Amazon sellers",
     "AI language learning assistant",
-    "AI-based dropshipping product finder",
+    "AI dropshipping product finder",
     "AI video script generator",
     "AI logo creator for startups"
   ];
@@ -39,8 +37,8 @@ app.get("/api/idea", async (req, res) => {
   res.json({ idea: randomIdea });
 });
 
-// SERVER
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.log("Server running on port " + PORT);
 });
