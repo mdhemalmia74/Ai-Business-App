@@ -1,54 +1,16 @@
-const express = require("express");
-const OpenAI = require("openai");
-
-const app = express();
-
-// OpenAI setup
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-// FRONTEND
-app.get("/", (req, res) => {
-  res.send(`
-    <h1>AI Business App 🚀</h1>
-    <button onclick="getIdea()">Get AI Idea</button>
-
-    <script>
-      async function getIdea() {
-        try {
-          const res = await fetch('/api/idea');
-          const data = await res.json();
-          alert(data.idea);
-        } catch(err) {
-          alert("Failed to get idea");
-        }
-      }
-    </script>
-  `);
-});
-
-// API ROUTE (UPDATED ✅)
 app.get("/api/idea", async (req, res) => {
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "user", content: "Generate one unique AI business idea" }
-      ],
-      max_tokens: 60,
-    });
+  const ideas = [
+    "AI-powered resume builder for job seekers",
+    "Smart chatbot for small businesses",
+    "AI social media content generator",
+    "AI fitness coach app",
+    "AI product description generator for Amazon sellers",
+    "AI language learning assistant",
+    "AI-based dropshipping product finder",
+    "AI video script generator",
+    "AI logo creator for startups"
+  ];
 
-    const idea = response.choices[0].message.content.trim();
-    res.json({ idea });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ idea: "Failed to generate idea" });
-  }
-});
-
-// SERVER
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  const randomIdea = ideas[Math.floor(Math.random() * ideas.length)];
+  res.json({ idea: randomIdea });
 });
